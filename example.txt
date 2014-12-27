@@ -1,0 +1,15 @@
+$ ./motif data/PS00117 2>/dev/null
+de Bruijn protein motif finder
+k: 4 and t: 0.8 and T: 0.5 and M: pam30 and i: 1
+
+g_min_similarity: 22.3816
+g_max_distance: 11.647, ma_avg: 0, mi_avg: 14.5587
+Building de Bruijn graph ... 0 %6 %12 %18 %24 %29 %35 %41 %47 %53 %59 %65 %71 %76 %82 %88 %94 %100 %
+Calculating node weights and adding IC edges ... 0 %1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18 %19 %20 %21 %22 %23 %24 %25 %26 %27 %28 %29 %30 %31 %32 %33 %34 %35 %36 %37 %38 %39 %40 %41 %42 %43 %44 %45 %46 %47 %48 %49 %50 %51 %52 %53 %54 %55 %56 %57 %58 %59 %60 %61 %62 %63 %64 %65 %66 %67 %68 %69 %70 %71 %72 %73 %74 %75 %76 %77 %78 %79 %80 %81 %82 %83 %84 %85 %86 %87 %88 %89 %90 %91 %92 %93 %94 %95 %96 %97 %98 %99 %100 %100 %
+Calculating neighbourhood general multplicities ...
+Traversing the graph
+Iteration 1: IFEN (w: 647.000000, gm: 17, ngm: 16.071428, ics: 16, dupl: 0) -> YPWVQIFENKGAAMGCSNPHPHGQIWASSFLPDEPARELRSQ
+lmin: 123, lmax: 123, credmin: 0.721289, credmax: 0.721289
+gm: 17, gm_min: 17,gm_max: 17
+Consensus words sorted by score:
+1. YPWVQIFENKGAAMGCSNPHPHGQIWASSFLPDEPARELRSQ (paths: 17, avg_err: 13.41, score: 0.796070, cons_len: 42, log_p_bg:-122.999520, log_supp: 2.833213, log_nseqs: 2.833213, norm_log_odds: 0.870852, norm_cred: 0.721289, weighted_log_odds: -nan, multiplied: 0.628135, gm_norm: 1.000000, weight_norm: 1.000000, r_score: 1, r_log_odds: 1, r_creda: 1, r_wghtd_log_odds: 1, r_multiplied: 1, r_gm: 1, r_weight: 1, cons_aas: Y[PK]-[WY]-VQIFENKGAAMGCSNPHPHGQ[VI]-WA[TS]-SFLPDEPARE[LDEI]-RSQ)

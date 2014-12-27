@@ -1,0 +1,66 @@
+de Bruijn Protein/DNA motif finder
+
+To compile:
+    * make
+    * make gvmotif
+
+The latter requires libgraphviz-dev package and has support for visualizing
+graphs with Graphviz.
+
+de Bruijn protein motif finder
+Usage: ./motif [options] seqfile
+Options:
+  -k	subword length (default: 4)
+  -t	theta for general multiplicity (default: (int)(0.8 * k))
+  -T	tau for S_Max (default: 0.6)
+  -r	threshold for the highest counter (default: 0.5)
+  -g	no of gaps in motif (default: 0)
+  -m	maximum motif length (default: not used)
+  -e	no of allowed errors in a path (default: not used)
+  -i	iteration count (default: 1)
+  -f	force initial subword node (default: not used)
+  -S	use SIM matrix (default: not used)
+  -M	scoring matrix: blosum50, blosum62, pam30 (default: blosum50)
+  -c	correct motif
+
+  -o	find occurrences
+  -p	print PWM matrices
+  -s	print statistics about the subword graph
+  -v	verbosity level (default: 1)
+
+Implementation details
+
+Graphs are represented as a containers of nodes and edges are pointers to nodes.
+Each node has three lists of edges: edges that point to the node (adj_left),
+edges originating from the node (adj_right) and outgoing inter-components edges
+(adj_ic).
+
+Function build_debruijn_graph() in sw_graph.cpp takes a set of sequences and
+builds 'classical' de Bruijn graphs without inter-component edges. The function
+also initializes the SIM matrix if it is used, but does not calculate the
+similarities. Node weights, general multiplicities and inter-component edges
+etc are added in (misnamed) function add_ic_edges(). The similarity function
+is defined in similarity.hpp.
+
+The graph is then traversed in function find_consensus(). First, we search node
+that is in S_max (gen_mul > g_tau * seq_count) and has the maximal
+weight/gen_mul/ngen_mul. The node and all adjacent inter-component nodes are
+selected and traversing starts. We do not actually sort the S_max set, because
+we would have to do that again after readjusting node weights.
+
+Node weights are adjusted after moving nodes/paths to the left or right.
+Adjusting can be done here, because the current left/right nodes share the same
+position in the consensus word. For each path, we keep track of the number of
+errors and if the error count is above threshold (-e), then the path is
+dropped/removed. Also, if a path gets stuck and can't move any further, we drop
+it. The traversal stops when the highest counter value is below threshold (can
+be "dynamic" or "fixed", see trav.cpp).
+
+Increasing the iteration count (how many times the graph is traversed) does not
+have any significant impact on the overall execution time, so in general it is a
+good strategy to use a high iteration count. In the end, the returned consensus
+words are scored and sorted by the score. The scoring function is defined in
+trav.cpp (void consensus_info::initialize_score()).
+
+Later, the aligned patterns can be identified using a fast pattern matching
+algorithm (Smith-Waterman algorithm?)
